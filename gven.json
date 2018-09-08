@@ -1,0 +1,9 @@
+{
+  "name": "quentincaffeino/event",
+  "dependencies": [
+    "quentincaffeino/callback"
+  ],
+  "autoload": {
+    "QC/Event": "src"
+  }
+}
