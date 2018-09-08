@@ -2,10 +2,10 @@
 extends Reference
 
 
-# @var  Callback
-var _Callback = preload('../vendor/quentincaffeino/callback/src/Callback.gd')
+# @const  Callback
+const Callback = preload('../vendor/quentincaffeino/callback/src/Callback.gd')
 
-# @var  { [event: string]: { [callback_name: string]: Callback } }
+# @var  { [event: string]: { [callbackName: string]: Callback } }
 var _observers = {}
 
 
@@ -14,21 +14,17 @@ var _observers = {}
 # @param  Object  target
 # @param  string  name
 func sub(event, target, name):  # bool
-  if typeof(event) != TYPE_STRING:
-    print('QC/Event/EventObserver: sub: Event name must be a string. Provided ' + str(typeof(event)))
-    return false
-
-  var callback_type = _Callback.canCreate(target, name)
-  if callback_type == _Callback.UNKNOWN:
+  var callbackType = Callback.canCreate(target, name)
+  if callbackType == Callback.UNKNOWN:
     print('QC/Event/EventObserver: sub: Can\'t initialize callback for event ' + str(event))
     return false
 
   if !_observers.has(event):
     _observers[event] = {}
 
-  var observer_name = target.name + '.' + name
-  if !_observers[event].has(observer_name):
-    _observers[event][observer_name] = _Callback.new(target, name, callback_type)
+  var observerName = target.name + '.' + name
+  if !_observers[event].has(observerName):
+    _observers[event][observerName] = Callback.new(target, name, callbackType)
 
   return true
 
@@ -37,15 +33,15 @@ func sub(event, target, name):  # bool
 # @param  Object  target
 # @param  string  name
 func unsub(event, target, name):  # void
-  var observer_name = target.name + '.' + name
-  _unsub(event, observer_name)
+  var observerName = target.name + '.' + name
+  _unsub(event, observerName)
 
 
 # @param  string  event
-# @param  string  observer_name
-func _unsub(event, observer_name):
-  if _observers[event].has(observer_name):
-    _observers[event].erase(observer_name)
+# @param  string  observerName
+func _unsub(event, observerName):
+  if _observers[event].has(observerName):
+    _observers[event].erase(observerName)
 
 
 # @param  string          event

@@ -54,7 +54,7 @@ func ensure():  # bool
 		return false
 
 	if getType(_target, _name) == UNKNOWN:
-		print('QC/Callback: ensure: Target is missing method/variable. (%s, %s)' % [_target, _name])
+		print('QC/Callback: ensure: Target is missing method/variable. (%s, %s)' % [ _target, _name ])
 		return false
 
 	return true
@@ -79,25 +79,23 @@ func call(argv = []):  # Variant
 	print('QC/Callback: call: Unable to call unknown type.')
 
 
-# Use this method before creating a callback
-#
 # @param  Reference  target
 # @param  string     name
 # @param  int        type
 static func canCreate(target, name, type = UNKNOWN):  # int
 	if typeof(target) != TYPE_OBJECT:
-		print('QC/Callback: can_create: First argument must be target object. Provided: ' + str(typeof(target)))
+		print('QC/Callback: canCreate: First argument must be target object. Provided: ' + str(typeof(target)))
 		return UNKNOWN
 
 	if typeof(name) != TYPE_STRING:
-		print('QC/Callback: can_create: Second argument must be variable or method name. Provided: ' + str(typeof(name)))
+		print('QC/Callback: canCreate: Second argument must be variable or method name. Provided: ' + str(typeof(name)))
 		return UNKNOWN
 
 	if type <= UNKNOWN or type > TYPE.size():
 		type = getType(target, name)
 
 		if type == UNKNOWN:
-			print('QC/Callback: can_create: Target object doesn\'t have supplied method or variable.')
+			print('QC/Callback: canCreate: Target object doesn\'t have supplied method or variable.')
 
 	return type
 
